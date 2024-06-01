@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="EMPTY_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/chrono-space-binaries/im/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/chrono-space-client/crates/components/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/chrono-space-client/crates/data_types/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/chrono-space-client/crates/macros/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/chrono-space-client/crates/ui_error/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/chrono-space-client/crates/views/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/chrono-space-client/crates/wasm_http/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/chrono-space-client/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/chrono-space-client/src-tauri/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/chrono-space-binaries/im/target" />
+      <excludeFolder url="file://$MODULE_DIR$/chrono-space-binaries/target" />
+      <excludeFolder url="file://$MODULE_DIR$/chrono-space-client/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

@@ -1,0 +1,13 @@
+[package]
+name = "wasm_http"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ui_error.workspace = true
+serde = { workspace = true, features = ["derive"] }
+once_cell.workspace = true
+leptos.workspace = true
+gloo-net = { workspace = true, features = ["json"] }
