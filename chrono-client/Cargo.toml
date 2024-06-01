@@ -1,5 +1,5 @@
 [package]
-name = "chrono-space-client-ui"
+name = "chrono-client-ui"
 version = "0.0.0"
 edition = "2021"
 

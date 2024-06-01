@@ -1,5 +1,5 @@
 [package]
-name = "chrono-space-client"
+name = "chrono-client"
 version = "0.0.0"
 description = "A Tauri App"
 authors = ["you"]
