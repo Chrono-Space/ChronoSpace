@@ -1,4 +1,4 @@
-use leptos::prelude::*;
+use leptos::*;
 use std::ops::{Div, Rem};
 use std::time::Duration;
 

@@ -1,34 +1,19 @@
-use data_types::friend::friend_add::{FriendAddReq, FriendAddRes};
 use data_types::friend::friend_list::{FriendListReq, FriendListRes};
 use leptos::logging::log;
-use leptos::prelude::*;
+use leptos::*;
 use wasm_http::http_ctx::HttpCtx;
-use leptos_reactive::create_resource;
-
 #[component]
 pub fn FriendList() -> impl IntoView {
-    let (friend_list, friend_list_set) = signal(FriendListReq {
+    let (friend_list, friend_list_set) = create_signal(FriendListReq {
         page_no: 1,
         page_size: 20,
     });
 
-    let (friend_list_res, friend_list_res_set) = signal(FriendListRes::default());
-
-    ///     <Await
-    ///         future=|| fetch_monkeys(3)
-    ///         let:data
-    ///     >
-    ///         <p>{*data} " little monkeys, jumping on the bed."</p>
-    ///     </Await>
-
+    let (friend_list_res, friend_list_res_set) = create_signal(FriendListRes::default());
     create_resource(
         move || friend_list.get(),
         move |value| async move {
-            let http_ctx = HttpCtx {
-                token: String::from(
-                    "+0lnk2qjYhe0M2y5qawvDgTkzslPUXuQRaAdEbPrI9NBfYesBqh34PgTwnbICnx8",
-                ),
-            };
+            let http_ctx = HttpCtx::default();
             if let Ok(Some(data)) = http_ctx
                 .post::<FriendListReq, FriendListRes>("/api/friend/list", &value)
                 .await

@@ -1,8 +1,8 @@
 use components::sign_login::SignLogin;
-use leptos::prelude::*;
+use leptos::*;
 #[component]
-pub fn SignLoginView() -> impl IntoView {
+pub fn SignLoginView(router_set: WriteSignal<String>) -> impl IntoView {
     view! {
-        <SignLogin />
+        <SignLogin router_set/>
     }
 }

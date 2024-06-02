@@ -21,4 +21,3 @@ futures.workspace = true
 wasm-bindgen-futures.workspace = true
 futures-util.workspace = true
 data_types.workspace = true
-leptos_reactive.workspace = true

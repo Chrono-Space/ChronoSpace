@@ -1,10 +1,13 @@
 use gloo_net::http::{Headers, Request};
+use leptos::logging::log;
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
+use ui_error::error::AppError::CustomError;
 use ui_error::result::AppResult;
 
 const HOST: &'static str = "http://127.0.0.1:65000";
 
+#[derive(Debug, Default, Clone)]
 pub struct HttpCtx {
     pub token: String,
 }
@@ -29,6 +32,10 @@ impl HttpCtx {
             .await?
             .json()
             .await?;
+        if !data.code.is_empty() {
+            log!("{}", data.msg);
+            return Err(CustomError(data.code));
+        }
         Ok(data.data)
     }
 

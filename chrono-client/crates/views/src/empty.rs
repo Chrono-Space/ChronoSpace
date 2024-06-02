@@ -1,4 +1,4 @@
-use leptos::prelude::*;
+use leptos::*;
 
 #[component]
 pub fn Empty() -> impl IntoView {
