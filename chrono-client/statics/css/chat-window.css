@@ -1,0 +1,39 @@
+
+.chat-window {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.chat-window-title {
+    height: 4rem;
+}
+
+.chat-record {
+    flex: 1;
+    white-space: pre-wrap;
+}
+
+.chat-tool {
+    border-top: 1px solid #2f2f2f;
+    height: 3rem;
+}
+
+.chat-input {
+    display: flex;
+    flex-direction: column;
+    height: 10rem;
+}
+
+.chat-input textarea {
+    flex: 1;
+    background: #111;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    resize: none;
+}
+
+.chat-input textarea:focus {
+    caret-color: white;
+}

@@ -1,0 +1,9 @@
+
+.home{
+    display: flex;
+    justify-content: flex-start
+}
+
+.home-chat-window{
+    flex: 1;
+}

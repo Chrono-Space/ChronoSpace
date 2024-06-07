@@ -20,9 +20,9 @@
     },
     "windows": [
       {
-        "title": "chrono-space-client",
-        "width": 800,
-        "height": 600
+        "title": "chrono",
+        "width": 1000,
+        "height": 750
       }
     ],
     "security": {

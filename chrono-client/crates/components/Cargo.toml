@@ -12,3 +12,6 @@ gloo-console.workspace = true
 time = { workspace = true, features = ["wasm-bindgen"]}
 data_types.workspace = true
 wasm_http.workspace = true
+macros.workspace = true
+chrono = { workspace = true, features = ["wasmbind"] }
+serde = { workspace = true, features = ["derive"] }

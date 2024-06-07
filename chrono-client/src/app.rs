@@ -3,7 +3,7 @@ use futures::stream::{SplitSink, SplitStream};
 use futures::{SinkExt, StreamExt};
 use gloo_net::websocket::futures::WebSocket;
 use gloo_net::websocket::Message;
-use leptos::ev::SubmitEvent;
+use leptos::ev::{message, SubmitEvent};
 use leptos::logging::log;
 use leptos::Attribute::String;
 use leptos::*;
@@ -11,9 +11,9 @@ use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::to_value;
 use std::sync::Arc;
 use views::empty::Empty;
-use views::friend_list::FriendList;
 use views::sign_login::SignLoginView;
 use wasm_bindgen::prelude::*;
+use views::home::Home;
 
 #[wasm_bindgen]
 extern "C" {
@@ -44,16 +44,21 @@ pub fn App() -> impl IntoView {
         }
         log!("{}", "WebSocket Closed");
     });
-    let (router, router_set) = create_signal("Login".to_string());
+    let (router, router_set) = create_signal("Home".to_string());
+    let (body, set_body) = create_signal(view! {<Home/>});
+    create_resource(
+        move || router.get(),
+        move |router| async move {
+            let v = match router.as_str() {
+                "Login" => view! {<SignLoginView router_set/>},
+                "Home" => view! {<Home/>},
+                _ => view! {<Empty/>},
+            };
+            set_body.set(v);
+        },
+    );
 
-    let message = move || match router.get().as_str() {
-        "Login" => view! {<SignLoginView router_set/>},
-        "Home" => view! {<Empty/>},
-        _ => view! {<Empty/>},
-    };
     view! {
-        <main class="container">
-            { message }
-        </main>
+        {move|| body.get()}
     }
 }
