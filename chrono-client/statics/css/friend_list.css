@@ -1,11 +1,16 @@
 .friends-list {
-    background-color: rgba(32, 32, 32);
+    background-color: rgba(34, 34, 34);
     height: 100vh;
 }
 
 .friends-list img {
-    width: 3rem;
-    height: 3rem;
+    width: 2rem;
+    height: 2rem;
+    margin-left: 0.5rem;
+}
+
+.friends-list p {
+    margin-left: 0.5rem;
 }
 
 .friends-list div {

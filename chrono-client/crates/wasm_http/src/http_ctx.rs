@@ -2,10 +2,9 @@ use gloo_net::http::{Headers, Request};
 use leptos::logging::log;
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
+use configs::CHRONO_IM_URL;
 use error::error::AppError::CustomError;
 use error::result::AppResult;
-
-const HOST: &'static str = "http://127.0.0.1:65000";
 
 #[derive(Debug, Default, Clone)]
 pub struct HttpCtx {
@@ -25,7 +24,7 @@ impl HttpCtx {
         T: Serialize,
         S: DeserializeOwned,
     {
-        let data: AppResponse<S> = Request::post(&format!("{}{}", HOST, url))
+        let data: AppResponse<S> = Request::post(&format!("{}{}", CHRONO_IM_URL, url))
             .headers(self.gen_headers().await)
             .json(params)?
             .send()

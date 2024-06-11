@@ -7,11 +7,51 @@
 
 .chat-window-title {
     height: 4rem;
+    display: flex;
+    align-items: center;
+    margin-left: 2rem;
 }
 
 .chat-record {
     flex: 1;
     white-space: pre-wrap;
+    overflow: auto;
+}
+
+.chat-record-list{
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.chat-record-list div{
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.chat-record-myself {
+    justify-content: end;
+    justify-items: end;
+}
+
+.chat-record-other {
+    justify-content: start;
+}
+
+.chat-record-list-p-other{
+    margin-left: 1rem;
+    margin-right: 10rem;
+    background-color: rgba(54, 54, 54);
+    padding: 0.5rem;
+    border-radius: 0.5rem; /* 设置圆角半径 */
+}
+
+.chat-record-list-p-myself{
+    margin-right: 1rem;
+    margin-left: 10rem;
+    background-color: rgba(20,42,88);
+    padding: 0.5rem;
+    border-radius: 0.5rem; /* 设置圆角半径 */
 }
 
 .chat-tool {
@@ -23,11 +63,17 @@
     display: flex;
     flex-direction: column;
     height: 10rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.chat-input .chat-myself{
+    justify-content: end;
 }
 
 .chat-input textarea {
     flex: 1;
-    background: #111;
+    background: rgba(21,21,21);
     border: none;
     outline: none;
     font-size: 1rem;
@@ -37,3 +83,9 @@
 .chat-input textarea:focus {
     caret-color: white;
 }
+
+.avatar-img {
+    width: 2rem;
+    height: 2rem;
+}
+

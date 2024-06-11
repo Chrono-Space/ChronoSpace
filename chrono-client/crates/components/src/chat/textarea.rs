@@ -1,41 +1,39 @@
 use chrono::Utc;
 use leptos::*;
 use leptos::leptos_dom::log;
-use data_types::friend::friend_list::{FriendListReq, FriendListRes};
+use data_types::chat_list::ChatInfo;
+use data_types::chat_send::{SendChatReq, SendChatRes};
 use data_types::friend::Friends;
 use wasm_http::http_ctx::HttpCtx;
-use crate::chat::chat_list::{Chat, ChatInfo};
 
 const ENTER_KEY: u32 = 13;
 
 #[component]
-pub fn Textarea(write_send_content: WriteSignal<Vec<Chat>>, read_friend: ReadSignal<Friends>) -> impl IntoView {
+pub fn Textarea(write_send_content: WriteSignal<Vec<ChatInfo>>, read_friend: ReadSignal<Friends>) -> impl IntoView {
     let (chat_content, write_chat_content) = create_signal(String::new());
-    let (current_chat, write_current_chat) = create_signal(Chat::default());
+    let (current_chat, write_current_chat) = create_signal(SendChatReq::default());
     let save = move |content:String| {
         write_chat_content.set(content);
     };
-    let send = move |content| {
-        let chat = Chat{ created_at: Utc::now().timestamp_nanos_opt().unwrap_or_default(), is_sender: 1, chat_info: ChatInfo::Text(content), to: read_friend.get().peer_id };
-        write_current_chat.set(chat.clone());
-        write_chat_content.set(String::new());
+    let send = move |data| {
+        write_current_chat.set(data);
     };
     create_resource(
         move || current_chat.get(),
         move |chat| async move {
-            // let http_ctx = HttpCtx::default();
-            // if let Ok(Some(data)) = http_ctx
-            //     .post::<FriendListReq, FriendListRes>("/api/friend/list", &value)
-            //     .await
-            // {
-            //     log!("{:?}", data);
-            //     friend_list_res_set.set(data);
-            // }
-            if chat.chat_info != ChatInfo::None {
-                log!("{:?}", chat);
-                write_send_content.update(move |data| {
-                    data.push(chat);
-                });
+            if !chat.data.is_empty() {
+                if let Ok(Some(res)) = HttpCtx::default().post::<SendChatReq, SendChatRes>("/api/chat/send", &SendChatReq {
+                    sender: chat.sender.to_string(),
+                    receiver: chat.receiver.to_string(),
+                    data_type: 1,
+                    data: chat.data.to_string(),
+                }).await {
+                    log!("{:?}", chat);
+                    write_send_content.update(move |data| {
+                        data.push(res.data);
+                    });
+                    write_chat_content.set(String::new());
+                }
             }
         },
     );
@@ -49,7 +47,13 @@ pub fn Textarea(write_send_content: WriteSignal<Vec<Chat>>, read_friend: ReadSig
                 if ctrl_key && key_code == ENTER_KEY {
                     save(event_target_value(&ev));
                 } else if key_code == ENTER_KEY {
-                    send(event_target_value(&ev).trim().to_string());
+                    let data = event_target_value(&ev).trim().to_string();
+                    let req = SendChatReq{
+                        sender: "".to_string(),
+                        receiver: read_friend.get().peer_id.to_string(),
+                        data_type: 1,
+                        data};
+                    send(req);
                 }
             }
         >

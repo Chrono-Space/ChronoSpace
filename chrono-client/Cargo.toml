@@ -48,3 +48,4 @@ macros = { path = "crates/macros" }
 wasm_http = { path = "crates/wasm_http" }
 error = { path = "crates/error" }
 views = { path = "crates/views" }
+configs = { path = "crates/configs" }

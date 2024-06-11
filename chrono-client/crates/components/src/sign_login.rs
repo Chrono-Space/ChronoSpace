@@ -29,8 +29,8 @@ pub fn SignLogin(router_set: WriteSignal<String>) -> impl IntoView {
                                 >
 
                                     <Login
-                                        params_set=params_set.clone()
-                                        router_set=router_set.clone()
+                                        params_set
+                                        router_set
                                     />
                                 </Show>
                             }

@@ -11,3 +11,4 @@ serde = { workspace = true, features = ["derive"] }
 once_cell.workspace = true
 leptos.workspace = true
 gloo-net = { workspace = true, features = ["json"] }
+configs.workspace = true

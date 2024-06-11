@@ -1,7 +1,7 @@
 use data_types::friend::friend_list::{FriendListReq, FriendListRes};
 use leptos::logging::log;
 use leptos::*;
-use ::macros::if_else;
+use configs::CHRONO_IM_URL;
 use data_types::friend::Friends;
 use wasm_http::http_ctx::HttpCtx;
 
@@ -50,8 +50,8 @@ pub fn FriendList(write_select_friend: WriteSignal<Friends>) -> impl IntoView {
                                     })
                             }>
                                 <img src=format!(
-                                    "http://127.0.0.1:65000/api/show/{}",
-                                    friend.avatar,
+                                    "{}/api/show/{}",
+                                    CHRONO_IM_URL, friend.avatar,
                                 )/>
                                 <p>{friend.nickname.to_string()}</p>
                             </div>

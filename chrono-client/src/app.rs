@@ -44,7 +44,7 @@ pub fn App() -> impl IntoView {
         }
         log!("{}", "WebSocket Closed");
     });
-    let (router, router_set) = create_signal("Home".to_string());
+    let (router, router_set) = create_signal("Login".to_string());
     let (body, set_body) = create_signal(view! {<Home/>});
     create_resource(
         move || router.get(),
@@ -58,7 +58,5 @@ pub fn App() -> impl IntoView {
         },
     );
 
-    view! {
-        {move|| body.get()}
-    }
+    view! {{move|| body.get()}}
 }
