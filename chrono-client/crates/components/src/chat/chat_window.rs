@@ -7,7 +7,7 @@ use super::textarea::Textarea;
 use super::chat_list::{ChatList};
 
 #[component]
-pub fn ChatWindow(read_select_friend: ReadSignal<Friends>) -> impl IntoView {
+pub fn ChatWindow(read_select_friend: ReadSignal<Friends>, router_set:WriteSignal<String>) -> impl IntoView {
     let (read_send_content, write_send_content) = create_signal::<Vec<ChatInfo>>(vec![]);
     let (chat_window, write_chat_window) = create_signal(view! { <Empty/> });
     let (read_friend, write_friend) = create_signal(Friends::default());
@@ -16,15 +16,16 @@ pub fn ChatWindow(read_select_friend: ReadSignal<Friends>) -> impl IntoView {
         move |friend| async move {
             write_friend.set(friend.clone());
             write_send_content.set(vec![]);
-            let http_ctx = HttpCtx::default();
-            if let Ok(Some(data)) = http_ctx.post::<ChatListReq, ChatListRes>("/api/chat/list", &ChatListReq {
-                receiver: friend.peer_id.to_string(),
-                page_no: 1,
-                page_size: 10,
-            }).await {
-                write_send_content.set(data.list);
-            }
-            let data = view! {
+            if !friend.peer_id.is_empty() {
+                let http_ctx = HttpCtx::default();
+                if let Ok(Some(data)) = http_ctx.post::<ChatListReq, ChatListRes>("/api/chat/list", &ChatListReq {
+                    receiver: friend.peer_id.to_string(),
+                    page_no: 1,
+                    page_size: 10,
+                }).await {
+                    write_send_content.set(data.list);
+                }
+                let data = view! {
                 <div class="chat-window">
                     <div class="chat-window-title">
                         <h3>{friend.nickname}</h3>
@@ -38,7 +39,8 @@ pub fn ChatWindow(read_select_friend: ReadSignal<Friends>) -> impl IntoView {
                     </div>
                 </div>
             }.into_view();
-            write_chat_window.set(data);
+                write_chat_window.set(data);
+            }
         },
     );
     view! {{move || chat_window.get() }}

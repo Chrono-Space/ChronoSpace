@@ -13,6 +13,11 @@ pub struct LoginReq {
     pub password: String,
 }
 
+#[derive(Debug, Default, Deserialize, Serialize)]
+pub struct LoginRes {
+    pub token: String,
+}
+
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ResetPasswordReq {
     pub email: String,

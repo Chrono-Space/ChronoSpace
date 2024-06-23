@@ -16,6 +16,8 @@ futures.workspace = true
 gloo-net.workspace = true
 views.workspace = true
 any_spawner.workspace = true
+storage.workspace = true
+
 
 [workspace]
 members = ["src-tauri", "crates/*"]
@@ -41,7 +43,9 @@ futures = "0.3.30"
 futures-util = "0.3.30"
 any_spawner = "0.1.0"
 chrono = "0.4.38"
+web-sys = "0.3.69"
 
+storage = { path = "crates/storage" }
 components = { path = "crates/components" }
 data_types = { path = "crates/data_types" }
 macros = { path = "crates/macros" }

@@ -1,0 +1,6 @@
+.group-member-list {
+    background-color: var(--group-member-list-color);
+    height: 100vh;
+    width: 15rem;
+    flex: 1;
+}

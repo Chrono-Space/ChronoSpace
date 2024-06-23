@@ -13,6 +13,7 @@ use std::sync::Arc;
 use views::empty::Empty;
 use views::sign_login::SignLoginView;
 use wasm_bindgen::prelude::*;
+use storage::{del_token, get_token};
 use views::home::Home;
 
 #[wasm_bindgen]
@@ -44,14 +45,19 @@ pub fn App() -> impl IntoView {
         }
         log!("{}", "WebSocket Closed");
     });
-    let (router, router_set) = create_signal("Login".to_string());
-    let (body, set_body) = create_signal(view! {<Home/>});
+    let token = get_token();
+    let mut current_token = "Home";
+    if token.is_empty() {
+        current_token = "Login";
+    }
+    let (router, router_set) = create_signal(current_token.to_string());
+    let (body, set_body) = create_signal(view! {<Home router_set/>});
     create_resource(
         move || router.get(),
         move |router| async move {
             let v = match router.as_str() {
                 "Login" => view! {<SignLoginView router_set/>},
-                "Home" => view! {<Home/>},
+                "Home" => view! {<Home router_set/>},
                 _ => view! {<Empty/>},
             };
             set_body.set(v);

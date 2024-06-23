@@ -7,7 +7,7 @@ use wasm_http::http_ctx::HttpCtx;
 
 const NICKNAME: &'static str = "None";
 #[component]
-pub fn FriendList(write_select_friend: WriteSignal<Friends>) -> impl IntoView {
+pub fn FriendList(write_select_friend: WriteSignal<Friends>, router_set:WriteSignal<String>) -> impl IntoView {
     let (friend_list, friend_list_set) = create_signal(FriendListReq {
         page_no: 1,
         page_size: 20,
@@ -18,12 +18,19 @@ pub fn FriendList(write_select_friend: WriteSignal<Friends>) -> impl IntoView {
         move || friend_list.get(),
         move |value| async move {
             let http_ctx = HttpCtx::default();
-            if let Ok(Some(data)) = http_ctx
+            match http_ctx
                 .post::<FriendListReq, FriendListRes>("/api/friend/list", &value)
-                .await
-            {
-                log!("{:?}", data);
-                friend_list_res_set.set(data);
+                .await {
+                Ok(Some(data)) => {
+                    log!("{:?}", data);
+                    friend_list_res_set.set(data);
+                }
+                Ok(None) => {
+                    router_set.set("Login".to_string());
+                }
+                Err(e) => {
+                    router_set.set("Login".to_string());
+                }
             }
         },
     );
@@ -45,8 +52,6 @@ pub fn FriendList(write_select_friend: WriteSignal<Friends>) -> impl IntoView {
                                         x.peer_id = friend1.peer_id.clone();
                                         x.nickname = friend1.nickname.clone();
                                         x.pub_key = friend1.pub_key.clone();
-                                        x.created_at = friend1.created_at;
-                                        x.updated_at = friend1.updated_at;
                                     })
                             }>
                                 <img src=format!(

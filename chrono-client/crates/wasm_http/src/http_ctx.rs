@@ -5,11 +5,10 @@ use serde::{Deserialize, Serialize};
 use configs::CHRONO_IM_URL;
 use error::error::AppError::CustomError;
 use error::result::AppResult;
+use storage::get_token;
 
 #[derive(Debug, Default, Clone)]
-pub struct HttpCtx {
-    pub token: String,
-}
+pub struct HttpCtx {}
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct AppResponse<S> {
@@ -40,7 +39,7 @@ impl HttpCtx {
 
     pub async fn gen_headers(&self) -> Headers {
         let header_map = Headers::new();
-        header_map.set("Authorization", &self.token);
+        header_map.set("Authorization", get_token().as_str());
         header_map.set("Content-Type", "application/json;charset=UTF-8");
         header_map
     }

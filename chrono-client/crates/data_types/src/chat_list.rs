@@ -21,6 +21,6 @@ pub struct ChatInfo {
     pub data: String,
     pub is_sender: u8,
     pub status: u8,
+    pub is_readed: u8,
     pub is_deleted: u8,
-    pub created_at: i64
 }

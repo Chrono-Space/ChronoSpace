@@ -2,6 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use tauri::api::process::{Command, CommandEvent};
+use tauri::Manager;
 
 fn main() {
     let (mut rx, mut child) = Command::new_sidecar("chrono-im")

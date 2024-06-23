@@ -1,0 +1,39 @@
+.community-list {
+    margin-top: 3rem;
+    background-color: rgba(30, 31, 34);
+    height: 100vh;
+    width: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.community-list img {
+    width: 3rem;
+    height: 3rem;
+    align-self: center;
+    flex: 1;
+    border-radius: 50%;
+    transition: border-radius 0.5s ease;
+}
+
+.community-list img:hover {
+    border-radius: 20%;
+    transition: border-radius 0.5s ease;
+}
+
+.group-info {
+    position: relative;
+}
+
+.group-show-float {
+    position: absolute;
+    background-color: rgba(17,18,20);
+    height: 2rem;
+    top: 50%;
+    left: 4rem;
+    margin-top: -1rem; /* 假设元素高度为 100px */
+    margin-right: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 10%;
+}

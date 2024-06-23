@@ -1,6 +1,4 @@
 use std::hash::{Hash};
-use std::rc::Rc;
-use std::sync::Arc;
 use leptos::*;
 use leptos::logging::log;
 use configs::CHRONO_IM_URL;
@@ -15,7 +13,7 @@ pub fn ChatList(read_send_content: ReadSignal<Vec<ChatInfo>>, myself: ReadSignal
         <div class="chat-record-list">
         <For
             each=move || read_send_content.get().into_iter().enumerate()
-            key=|(_, state)| state.created_at
+            key=|(_, state)| state.id
             children = move |(index, chat_info)| {
                 log!("{:?}", chat_info.data);
                 match chat_info.data_type {
@@ -46,27 +44,12 @@ pub fn ChatList(read_send_content: ReadSignal<Vec<ChatInfo>>, myself: ReadSignal
             }
             }
         />
+        {
+            let doc = document();
+            if let Ok(Some(content)) = doc.query_selector(".chat-record") {
+                content.set_scroll_top(content.scroll_height());
+            }
+        }
         </div>
     }
 }
-
-// #[component]
-// pub fn ChatShow(chat_info: ChatInfo) -> impl IntoView {
-//     view! {
-//         <Show
-//             when= chat_info.is_sender == 1
-//             fallback=|| view! {
-//                 <div class="chat-record-other">
-//                     <img class="avatar-img" src={friend_avatar.get()}/>
-//                     <p class="chat-record-list-p-other">{chat_info.data.clone()}</p>
-//             </div> }
-//         >
-//             view!{
-//                 <div class="chat-record-myself">
-//                     <p class="chat-record-list-p-myself">{chat_info.data}</p>
-//                     <img class="avatar-img" src={myself_avatar.get()}/>
-//                 </div>
-//             }
-//         </Show>
-//     }
-// }

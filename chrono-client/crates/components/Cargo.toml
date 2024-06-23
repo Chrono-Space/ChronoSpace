@@ -16,3 +16,4 @@ macros.workspace = true
 chrono = { workspace = true, features = ["wasmbind"] }
 serde = { workspace = true, features = ["derive"] }
 configs.workspace = true
+storage.workspace = true

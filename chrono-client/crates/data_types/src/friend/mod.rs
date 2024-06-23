@@ -10,7 +10,6 @@ pub struct Friends {
     pub peer_id: String,
     pub avatar: String,
     pub nickname: String,
+    pub is_group: u8,
     pub is_deleted: u8,
-    pub updated_at: i64,
-    pub created_at: i64,
 }

@@ -1,10 +1,11 @@
 use data_types::friend::friend_list::{FriendListReq, FriendListRes};
-use data_types::signup_login::{LoginReq, ResetPasswordReq, SignupReq};
+use data_types::signup_login::{LoginReq, LoginRes, ResetPasswordReq, SignupReq};
 use data_types::verification_code::SendVerificationCodeReq;
 use leptos::html;
 use leptos::html::tr;
 use leptos::leptos_dom::log;
 use leptos::*;
+use storage::set_token;
 use wasm_http::http_ctx::HttpCtx;
 
 #[component]
@@ -54,9 +55,9 @@ pub fn Login(params_set: WriteSignal<String>, router_set: WriteSignal<String>) -
         move || (login.get(), email.get(), password.get()),
         move |(value, email, password)| async move {
             log!("test");
-            if value && !  email.is_empty() && !password.is_empty(){
-                if let Err(e) = HttpCtx::default()
-                    .post::<LoginReq, ()>(
+            if value && ! email.is_empty() && !password.is_empty(){
+                if let Ok(Some(data)) = HttpCtx::default()
+                    .post::<LoginReq, LoginRes>(
                         "/api/login",
                         &LoginReq {
                             email,
@@ -65,9 +66,10 @@ pub fn Login(params_set: WriteSignal<String>, router_set: WriteSignal<String>) -
                     )
                     .await
                 {
-                    log!("{e}");
-                } else {
+                    set_token(&data.token);
                     router_set.set("Home".to_string());
+                } else {
+                    router_set.set("Login".to_string());
                 }
                 log!("test1");
                 set_login.set(false);

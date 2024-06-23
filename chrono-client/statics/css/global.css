@@ -7,16 +7,24 @@
     color: #fff;
 }
 body {
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
-    /*min-height: 100vh;*/
-    /*background: #111;*/
-    /*width: 100vh;*/
-    background: rgba(21,21,21);
+    background: var(--bg-color);
     overflow: hidden;
 }
 
 img {
     border-radius: 0.5rem; /* 设置圆角半径 */
+}
+
+:root {
+    --bg-color: rgba(21,21,21);
+    --group-member-list-color: rgba(30, 31, 34);
+    --chat-record-list-p-other-color: rgba(54, 54, 54);
+    --chat-record-list-p-myself-color: rgba(20,42,88);
+    --chat-input-textarea-color: rgba(21,21,21);
+    --text-color: #fff;
+}
+
+.light-theme {
+    --bg-color: #fff;
+    --text-color: #333;
 }

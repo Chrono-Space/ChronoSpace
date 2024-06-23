@@ -1,0 +1,8 @@
+[package]
+name = "storage"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+gloo-storage.workspace = true
+once_cell.workspace = true
