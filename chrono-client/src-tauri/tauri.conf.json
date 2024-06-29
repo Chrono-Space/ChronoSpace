@@ -7,16 +7,15 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "chrono-space-client",
+    "productName": "chrono",
     "version": "0.0.0"
   },
   "tauri": {
     "allowlist": {
-      "all": false,
       "shell": {
-        "all": false,
-        "open": true
-      }
+        "sidecar": true
+      },
+      "all": true
     },
     "windows": [
       {
@@ -31,6 +30,9 @@
       "csp": null
     },
     "bundle": {
+      "macOS": {
+        "entitlements": "Info.plist"
+      },
       "active": true,
       "targets": "all",
       "identifier": "com.tauri.app",
