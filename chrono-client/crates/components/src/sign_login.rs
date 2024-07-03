@@ -137,9 +137,8 @@ pub fn Signup(params_set: WriteSignal<String>) -> impl IntoView {
                 {
                     log!("{e}");
                 } else {
-
+                    reset_set.set("SetPassword");
                 }
-                reset_set.set("SetPassword");
                 set_send_code.set(false);
             }
         },

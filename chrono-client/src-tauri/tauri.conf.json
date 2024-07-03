@@ -12,8 +12,17 @@
   },
   "tauri": {
     "allowlist": {
+      "fs": {
+        "all": true
+      },
       "shell": {
-        "sidecar": true
+        "sidecar": true,
+        "scope": [
+          {
+            "name": "binaries/chrono-im",
+            "sidecar": true
+          }
+        ]
       },
       "all": true
     },
@@ -31,11 +40,11 @@
     },
     "bundle": {
       "macOS": {
-        "entitlements": "Info.plist"
+        "entitlements": null
       },
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.app",
+      "identifier": "com.tauri.chrono",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
