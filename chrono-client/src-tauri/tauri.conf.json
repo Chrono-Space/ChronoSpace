@@ -28,6 +28,7 @@
     },
     "windows": [
       {
+        "acceptFirstMouse": true,
         "hiddenTitle": true,
         "titleBarStyle": "Overlay",
         "title": "chrono",

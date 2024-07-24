@@ -11,6 +11,7 @@ use wasm_http::http_ctx::HttpCtx;
 #[component]
 pub fn SignLogin(router_set: WriteSignal<String>) -> impl IntoView {
     let (params, params_set) = create_signal("Login".to_string());
+
     view! {
         <div class="sign_login">
             <div class="ring">
@@ -55,15 +56,9 @@ pub fn Login(params_set: WriteSignal<String>, router_set: WriteSignal<String>) -
         move || (login.get(), email.get(), password.get()),
         move |(value, email, password)| async move {
             log!("test");
-            if value && ! email.is_empty() && !password.is_empty(){
+            if value && !email.is_empty() && !password.is_empty() {
                 if let Ok(Some(data)) = HttpCtx::default()
-                    .post::<LoginReq, LoginRes>(
-                        "/api/login",
-                        &LoginReq {
-                            email,
-                            password,
-                        },
-                    )
+                    .post::<LoginReq, LoginRes>("/api/login", &LoginReq { email, password })
                     .await
                 {
                     set_token(&data.token);

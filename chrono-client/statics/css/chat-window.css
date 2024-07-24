@@ -10,6 +10,7 @@
     display: flex;
     align-items: center;
     margin-left: 2rem;
+    -webkit-app-region: drag;
 }
 
 .chat-record {

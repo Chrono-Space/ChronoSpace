@@ -1,8 +1,8 @@
-use std::sync::RwLock;
-use once_cell::sync::Lazy;
 use gloo_storage::Storage;
+use once_cell::sync::Lazy;
+use std::sync::RwLock;
 
-pub static TOKEN:Lazy<RwLock<String>> = Lazy::new(|| {
+pub static TOKEN: Lazy<RwLock<String>> = Lazy::new(|| {
     let token = gloo_storage::LocalStorage::get("Auth").unwrap_or_default();
     RwLock::new(token)
 });

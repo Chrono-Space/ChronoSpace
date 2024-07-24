@@ -1,14 +1,28 @@
-use std::hash::{Hash};
-use leptos::*;
-use leptos::logging::log;
 use configs::CHRONO_IM_URL;
 use data_types::chat_list::ChatInfo;
 use data_types::friend::Friends;
+use leptos::logging::log;
+use leptos::*;
+use std::hash::Hash;
 
 #[component]
-pub fn ChatList(read_send_content: ReadSignal<Vec<ChatInfo>>, myself: ReadSignal<Friends>, friend: ReadSignal<Friends>) -> impl IntoView {
-    let (myself_avatar, _) =create_signal(format!("{}/api/show/{}", CHRONO_IM_URL, myself.get().avatar));
-    let (friend_avatar, _)= create_signal(format!("{}/api/show/{}", CHRONO_IM_URL, friend.get().avatar));
+pub fn ChatList(
+    read_send_content: ReadSignal<Vec<ChatInfo>>,
+    myself: ReadSignal<Friends>,
+    friend: ReadSignal<Friends>,
+
+) -> impl IntoView {
+    let (myself_avatar, _) = create_signal(format!(
+        "{}/api/show/{}",
+        CHRONO_IM_URL,
+        myself.get().avatar
+    ));
+    let (friend_avatar, _) = create_signal(format!(
+        "{}/api/show/{}",
+        CHRONO_IM_URL,
+        friend.get().avatar
+    ));
+
     view! {
         <div class="chat-record-list">
         <For

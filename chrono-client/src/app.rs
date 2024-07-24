@@ -1,20 +1,20 @@
-use futures::channel::mpsc::channel;
-use futures::stream::{SplitSink, SplitStream};
-use futures::{SinkExt, StreamExt};
+use std::collections::HashMap;
+use futures::{StreamExt};
 use gloo_net::websocket::futures::WebSocket;
 use gloo_net::websocket::Message;
-use leptos::ev::{message, SubmitEvent};
 use leptos::logging::log;
-use leptos::Attribute::String;
 use leptos::*;
 use serde::{Deserialize, Serialize};
-use serde_wasm_bindgen::to_value;
-use std::sync::Arc;
+use storage::{get_token};
 use views::empty::Empty;
+use views::home::Home;
 use views::sign_login::SignLoginView;
 use wasm_bindgen::prelude::*;
-use storage::{del_token, get_token};
-use views::home::Home;
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum MessageData {
+    HasNewInfo(String)
+}
 
 #[wasm_bindgen]
 extern "C" {
@@ -29,19 +29,25 @@ struct GreetArgs<'a> {
 
 #[component]
 pub fn App() -> impl IntoView {
+    let (has_new_info_read, has_new_info_write) = create_signal::<HashMap<String, i64>>(HashMap::new());
     let ws = WebSocket::open("ws://127.0.0.1:65000/ws").unwrap();
-    let (mut write, mut read) = ws.split();
-    let (s, mut r) = channel::<Message>(100);
-    let s = Arc::new(s);
-    let ss = s.clone();
-    let sss = s.clone();
+    let (write, mut read) = ws.split();
     spawn_local(async move {
-        write.send(Message::Text("data".to_string())).await.unwrap();
-    });
-
-    spawn_local(async move {
-        while let Some(msg) = read.next().await {
-            log!("{}", format!("1. {:?}", msg));
+        while let Some(Ok(msg)) = read.next().await {
+            match msg {
+                Message::Text(_) => {}
+                Message::Bytes(data) => {
+                    if let Ok(data) = serde_json::from_slice::<MessageData>(&data) {
+                        match data {
+                            MessageData::HasNewInfo(peer_id) => {
+                                let mut data_map = has_new_info_read.get();
+                                data_map.insert(peer_id, 1);
+                                has_new_info_write.set(data_map);
+                            }
+                        }
+                    }
+                }
+            }
         }
         log!("{}", "WebSocket Closed");
     });
@@ -51,13 +57,13 @@ pub fn App() -> impl IntoView {
         current_token = "Login";
     }
     let (router, router_set) = create_signal(current_token.to_string());
-    let (body, set_body) = create_signal(view! {<Home router_set/>});
+    let (body, set_body) = create_signal(view! {<Home router_set has_new_info_read/>});
     create_resource(
         move || router.get(),
         move |router| async move {
             let v = match router.as_str() {
                 "Login" => view! {<SignLoginView router_set/>},
-                "Home" => view! {<Home router_set/>},
+                "Home" => view! {<Home router_set has_new_info_read/>},
                 _ => view! {<Empty/>},
             };
             set_body.set(v);

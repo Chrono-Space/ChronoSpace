@@ -1,11 +1,11 @@
+use crate::group::GroupInfo;
+use configs::CHRONO_IM_URL;
 use leptos::*;
 use serde::{Deserialize, Serialize};
-use configs::CHRONO_IM_URL;
-use crate::group::GroupInfo;
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct GroupList{
-    pub list: Vec<GroupInfo>
+pub struct GroupList {
+    pub list: Vec<GroupInfo>,
 }
 
 #[component]

@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-leptos.workspace = true
+leptos = { workspace = true }
 gloo-timers.workspace = true
 gloo-console.workspace = true
 time = { workspace = true, features = ["wasm-bindgen"]}
@@ -17,3 +17,4 @@ chrono = { workspace = true, features = ["wasmbind"] }
 serde = { workspace = true, features = ["derive"] }
 configs.workspace = true
 storage.workspace = true
+once_cell.workspace = true

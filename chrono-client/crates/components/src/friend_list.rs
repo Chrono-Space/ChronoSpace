@@ -1,13 +1,18 @@
+use std::collections::HashMap;
+use configs::CHRONO_IM_URL;
 use data_types::friend::friend_list::{FriendListReq, FriendListRes};
+use data_types::friend::Friends;
 use leptos::logging::log;
 use leptos::*;
-use configs::CHRONO_IM_URL;
-use data_types::friend::Friends;
 use wasm_http::http_ctx::HttpCtx;
 
 const NICKNAME: &'static str = "None";
 #[component]
-pub fn FriendList(write_select_friend: WriteSignal<Friends>, router_set:WriteSignal<String>) -> impl IntoView {
+pub fn FriendList(
+    write_select_friend: WriteSignal<Friends>,
+    router_set: WriteSignal<String>,
+    has_new_info_read: ReadSignal<HashMap<String, i64>>
+) -> impl IntoView {
     let (friend_list, friend_list_set) = create_signal(FriendListReq {
         page_no: 1,
         page_size: 20,
@@ -20,7 +25,8 @@ pub fn FriendList(write_select_friend: WriteSignal<Friends>, router_set:WriteSig
             let http_ctx = HttpCtx::default();
             match http_ctx
                 .post::<FriendListReq, FriendListRes>("/api/friend/list", &value)
-                .await {
+                .await
+            {
                 Ok(Some(data)) => {
                     log!("{:?}", data);
                     friend_list_res_set.set(data);

@@ -1,10 +1,10 @@
-use leptos::{component, create_signal, document, IntoView, Show, SignalGet, SignalSet, view};
-use serde::{Deserialize, Serialize};
 use configs::CHRONO_IM_URL;
+use leptos::{component, create_signal, document, view, IntoView, Show, SignalGet, SignalSet};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
 pub struct GroupInfo {
-    pub avatar:String,
+    pub avatar: String,
     pub nickname: String,
 }
 

@@ -1,9 +1,9 @@
-pub mod game_time;
-pub mod sign_login;
-pub mod friend_list;
 pub mod chat;
-pub mod empty;
 pub mod community_list;
-pub mod group_member_list;
-pub mod title_bar;
+pub mod empty;
+pub mod friend_list;
+pub mod game_time;
 pub mod group;
+pub mod group_member_list;
+pub mod sign_login;
+pub mod title_bar;
